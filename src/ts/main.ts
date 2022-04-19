@@ -1,5 +1,5 @@
 import Canvas from "./canvas"
-import { Pixel, RGBA } from "./pixel"
+import Pixel from "./pixel"
 import ImgReader from "./img-reader" 
 
 const canvas = new Canvas(document.body, 800, 600);
@@ -23,22 +23,8 @@ grayscBtn.addEventListener("click", (_) => {
 	if (!ireader.image)
 		return;
 
-	const test = canvas.context.getImageData(0, 0, ireader.image.width, ireader.image.height);
-	const data = new ImageData(ireader.image.width, ireader.image.height);
-
-	const pixels: Pixel[] = [];
-	for (let i = 0; i < test.data.length;) {
-		const rgba: RGBA = [0, 0, 0, 0];
-
-		let j;
-		for (j = 0;j < rgba.length; ++j) {
-			rgba[j] = test.data[i + j];
-		}
-
-		pixels.push(new Pixel(rgba));
-		i += j;
-	}
-
-	console.log(pixels);
+	const pixels = canvas.pixels;
+	pixels.fill(new Pixel([255, 0, 0, 255]), 0)
+	canvas.pixels = pixels;
 });
 
