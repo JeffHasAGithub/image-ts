@@ -1,8 +1,10 @@
 import Canvas from "./canvas"
 import ImgReader from "./img-reader" 
+import RadioGroup from "./radio-group"
 
 const canvas = new Canvas(document.body, 800, 600);
 const ireader = new ImgReader(document.body);
+const options = new RadioGroup(document.body, "options", ["original", "grayscale", "invert"]);
 
 window.addEventListener("imgrdy", (ev) => {
 	if (!ireader.image)
@@ -10,15 +12,23 @@ window.addEventListener("imgrdy", (ev) => {
 
 	canvas.resize(ireader.image.width, ireader.image.height);
 	canvas.addImage(ireader.image, 0, 0);
+	
 });
 
-const grayscBtn = document.createElement("button");
-grayscBtn.innerText = "Grayscale";
-document.body.appendChild(grayscBtn);
+const origBtn = options.get("original")!;
+origBtn.addEventListener("click", (_) => {
+	if (!ireader.image)
+		return;
 
+	canvas.context.drawImage(ireader.image, 0, 0);
+});
+
+const grayscBtn = options.get("grayscale")!;
 grayscBtn.addEventListener("click", (_) => {
 	if (!ireader.image)
 		return;
+
+	canvas.context.drawImage(ireader.image, 0, 0);
 
 	const pixels = canvas.pixels;
 	for (let pixel of pixels) {
@@ -30,13 +40,12 @@ grayscBtn.addEventListener("click", (_) => {
 	canvas.pixels = pixels;
 });
 
-const invertBtn = document.createElement("button");
-invertBtn.innerText = "Invert";
-document.body.appendChild(invertBtn);
-
+const invertBtn = options.get("invert")!;
 invertBtn.addEventListener("click", (_) => {
 	if (!ireader.image)
 		return;
+
+	canvas.context.drawImage(ireader.image, 0, 0);
 
 	const pixels = canvas.pixels;
 	for (let pixel of pixels) {
