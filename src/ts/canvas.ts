@@ -11,6 +11,7 @@ class Canvas {
 		this._element = document.createElement("canvas");	
 		this._element.width = w;
 		this._element.height = h;
+		this._element.style.border = "1px solid black";
 		anchor.appendChild(this._element);
 
 		this._context = this._element.getContext("2d")!;

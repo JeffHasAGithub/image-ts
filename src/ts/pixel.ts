@@ -1,4 +1,4 @@
-type RGBA = [number, number, number, number];
+export type RGBA = [number, number, number, number];
 
 export class Pixel {
 	private readonly _rgba: RGBA;
@@ -9,7 +9,7 @@ export class Pixel {
 	}
 
 	get() {
-		return this._rgba;
+		return [...this._rgba] as RGBA;
 	}
 
 	set(rgba: RGBA) {
